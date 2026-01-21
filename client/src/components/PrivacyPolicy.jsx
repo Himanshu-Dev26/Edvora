@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
         </header>
 
         <div className="mt-8 space-y-6 text-gray-700">
-          <p className="text-base">Edemy LMS (<span className="font-semibold">"we"</span>, <span className="font-semibold">"us"</span>, or <span className="font-semibold">"our"</span>) cares about your privacy. This policy explains what information we collect, why we collect it, and how you can manage it. We kept the language simple and aligned styles with the Hero section for visual consistency.</p>
+          <p className="text-base">Edvora LMS (<span className="font-semibold">"we"</span>, <span className="font-semibold">"us"</span>, or <span className="font-semibold">"our"</span>) cares about your privacy. This policy explains what information we collect, why we collect it, and how you can manage it. We kept the language simple and aligned styles with the Hero section for visual consistency.</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-4 bg-blue-50/60 rounded-xl border border-blue-100">

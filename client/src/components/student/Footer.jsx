@@ -28,10 +28,10 @@ const Footer = () => {
 					</p> */}
 
 
-					<img className="w-auto h-28 transition-all duration-300 hover:opacity-100 hover:scale-105" src='/edemylms.png' alt="logo" />
+					
 					
 					<p className="mt- text-center sm:flex sm:flex-row sm:justify-center  md:text-left text-sm text-white/80">
-						Edemy LMS makes education accessible and engaging, connecting
+						Edvora LMS makes education accessible and engaging, connecting
 						students with educators through quality courses, interactive tools,
 						and intuitive design.
 					</p>
@@ -92,7 +92,7 @@ const Footer = () => {
 				</div>
 			</div>
 			<p className="py-4 text-center text-xs md:text-sm text-white/60">
-				Copyright 2025 © Edemy by GPS. All Right Reserved.
+				Copyright 2025 © Edvora. All Right Reserved.
 			</p>
 		</footer>
 	);

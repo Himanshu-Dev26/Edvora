@@ -57,7 +57,7 @@ const Navbar = () => {
 				{!user &&
 				<div className="flex items-center gap-5">
 					<Link
-						to="https://go-projects-gps.vercel.app/"
+						to=""
 						target="_blank"
 						className="flex items-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium text-indigo-600 shadow-sm transition-colors hover:bg-accent hover:text-indigo-700"
 					>
@@ -80,7 +80,7 @@ const Navbar = () => {
 					// <UserButton />
 					<UserButton>
 						<UserButton.MenuItems>
-                                <UserButton.Action label='Go Projects' labelIcon={<ExternalLinkIcon size={16} className='text-green-500' />}  onClick={() => window.open("https://go-projects-gps.vercel.app", "_blank")} />
+                                <UserButton.Action label='Go Projects' labelIcon={<ExternalLinkIcon size={16} className='text-green-500' />}  onClick={() => window.open("", "_blank")} />
                             </UserButton.MenuItems>
 					</UserButton>
 				) : (
@@ -107,14 +107,14 @@ const Navbar = () => {
           user ? 
 		  		<UserButton>
 					<UserButton.MenuItems>
-                        <UserButton.Action label='Go Projects' labelIcon={<ExternalLinkIcon size={16} className='text-green-500' />}  onClick={() => window.open("https://go-projects-gps.vercel.app", "_blank")} />
+                        <UserButton.Action label='Go Projects' labelIcon={<ExternalLinkIcon size={16} className='text-green-500' />}  onClick={() => window.open("", "_blank")} />
                     </UserButton.MenuItems>
 				</UserButton> :
 		  	
 
 				<div className="flex items-center gap-2">
 				<Link
-					to="https://go-projects-gps.vercel.app/"
+					to=""
 					target="_blank"
 					className="flex items-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium text-indigo-600 shadow-sm transition-colors hover:bg-accent hover:text-indigo-700"
 				>

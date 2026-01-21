@@ -14,7 +14,7 @@ const CallToAction = () => {
 			</h1>
 			<p className="text-gray-500 sm:text-sm">
 				Whether you're a student looking to enhance your skills or an educator
-				wanting to share knowledge, Edemy LMS is the perfect platform for you.
+				wanting to share knowledge, Edvora LMS is the perfect platform for you.
 				Get Startd
 			</p>
 			<div className="flex items-center font-medium gap-6 mt-4">

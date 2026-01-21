@@ -18,13 +18,14 @@ const About = () => {
 					experience.
 				</p>
 
+
 				{/* Section: Our Mission */}
 				<div className=" p-8 rounded-lg shadow-lg mb-8">
 					<h2 className="text-2xl font-semibold text-gray-700 mb-4">
 						Our Mission
 					</h2>
 					<p className="text-gray-600">
-						At Edemy LMS, we strive to make education accessible and engaging
+						At Edvora Lms, we strive to make education accessible and engaging
 						for everyone. Our platform bridges the gap between students and
 						educators by providing high-quality courses, interactive learning
 						tools, and an intuitive user experience.
@@ -64,11 +65,11 @@ const About = () => {
 				{/* Section: Join Us */}
 				<div className="mt-12 text-center">
 					<h2 className="text-2xl font-semibold text-gray-700 mb-4">
-						Join Edemy LMS Today
+						Join Edvora LMS Today
 					</h2>
 					<p className="text-gray-600 mb-6">
 						Whether you're a student looking to enhance your skills or an
-						educator wanting to share knowledge, Edemy LMS is the perfect
+						educator wanting to share knowledge, Edvora LMS is the perfect
 						platform for you.
 					</p>
 
