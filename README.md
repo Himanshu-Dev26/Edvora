@@ -5,13 +5,13 @@
 
 </div>
 
-# Edemy LMS 🎓 - A Modern Learning Management System
+# Edvora 🎓 - A Modern Learning Management System
 
 
-Edemy LMS is a full-stack learning management system (LMS) that provides educators and students with a seamless e-learning experience. Built using modern web technologies, it includes user authentication, course management, video streaming, and progress tracking.
-<img width="1536" height="1024" alt="edemylms" src="https://github.com/user-attachments/assets/dab1ef86-1699-488f-addb-c7315b1116ed" />
+Edvora is a full-stack learning management system (LMS) that provides educators and students with a seamless e-learning experience. Built using modern web technologies, it includes user authentication, course management, video streaming, and progress tracking.
 
-![Edemy LMS](https://github.com/user-attachments/assets/8926c6a8-0e32-442a-82f5-dd19b11b6d7c)
+
+![Edemy LMS](https://github.com/user-attachments/assets/8926c6a8-0e32-442a-82f5-dd19b11b6d7c
 
 
 
@@ -145,117 +145,4 @@ Edemy LMS is a full-stack learning management system (LMS) that provides educato
 
 
 
-## ⚡ Installation & Setup
 
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/Gyanthakur/Edemy-LMS.git
-cd edemy-lms
-```
-
-### 2️⃣ Install Dependencies
-
-#### Frontend:
-```bash
-cd client
-npm install
-npm run dev
-```
-
-#### Backend:
-```bash
-cd server
-npm install
-npm start
-```
-
-### 3️⃣ Setup Environment Variables
-Create a `.env` file in both `client/` and `server/` directories and add required credentials (MongoDB, Cloudinary, Clerk, Stripe, etc.).
-
----
-
-## 🔥 Deployment
-
-This project is set up for deployment on **Vercel**.
-
-### Deploy Backend
-```bash
-cd server
-vercel --prod
-```
-
-### Deploy Frontend
-```bash
-cd client
-vercel --prod
-```
-
----
-
-## 🔐 License
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## 🎯 Contributors
-
-👤 **Gyan Pratap Singh** – *Developer & Maintainer*  
-📧 Contact: [gps.96169@gmail.com](mailto:gps.96169@gmail.com)  
-🔗 GitHub: [@gyanthakur](https://github.com/Gyanthakur)  
-
-
-
-## 🤝 Connect With Me
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=38BDF8&center=true&vCenter=true&width=600&lines=Hey+there!+I'm+Gyan+Pratap+Singh;Full+Stack+Web+Developer;Open+Source+Contributor;Always+Open+to+Collaborations;Let's+Build+Something+Awesome&v=2" alt="Typing" />
-</p>
-
-
-
-<p align="center">
-  <a href="https://wa.me/918957818597?text=Hey%20%F0%9F%91%8B%2C%20how%20can%20I%20help%20you%3F">
-    <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-  </a>
-  <a href="mailto:gps.96169@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" />
-  </a>
-  <a href="https://www.linkedin.com/in/gyan-pratap-singh-275785236/">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
-  </a>
-</p>
-
-
-<p align="center">
-  <a href="https://github.com/Gyanthakur">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
-  </a>
-  <a href="https://www.instagram.com/gyanpratapsingh_">
-    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" />
-  </a>
-  <a href="https://linktr.ee/gp_singh">
-    <img src="https://img.shields.io/badge/Linktree-43E55E?style=for-the-badge&logo=linktree&logoColor=black" />
-  </a>
-  <a href="https://www.facebook.com/profile.php?id=100026766931684">
-    <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" />
-  </a>
-</p>
-
----
-
-
-
-## Thank you for checking out the **Edemy LMS** project! Happy coding! 😊
-
----
-## ⭐ Support
-Give a ⭐ if you like this project!
-
----
-Made with ❤️ by Gyan Pratap Singh
-
-### ⭐ Show Some Love!
-
-If you like this project, don't forget to leave a **⭐ Star** on GitHub! 🚀
-
-
-<img width="1536" height="1024" alt="gps" src="https://github.com/user-attachments/assets/fde20654-9d28-44b1-93e7-167e112752a0" />
