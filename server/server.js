@@ -2,50 +2,57 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDB from "./configs/mongodb.js";
-import { clerkWebhooks, stripeWebhooks } from "./controllers/webhooks.js";
-import educatorRouter from "./routes/educatorRoutes.js";
-import { clerkMiddleware } from "@clerk/express";
 import connectCloudinay from "./configs/cloudinary.js";
+import { clerkMiddleware } from "@clerk/express";
+
+import educatorRouter from "./routes/educatorRoutes.js";
 import courseRouter from "./routes/courseRoute.js";
 import userRouter from "./routes/userRoutes.js";
+
+import { clerkWebhooks, stripeWebhooks } from "./controllers/webhooks.js";
 
 // initialize express
 const app = express();
 
-// connect to db
+// ✅ CORS
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://edvora-frontend-six.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+// ✅ Clerk middleware
+app.use(clerkMiddleware());
+
+// ✅ Stripe webhook MUST be RAW and MUST come BEFORE express.json()
+app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
+
+// ✅ JSON for all normal APIs (NOT Stripe)
+app.use(express.json());
+
+// connect DB + cloudinary
 await connectDB();
 await connectCloudinay();
 
-// ✅ middleware
-app.use(cors());
-app.use(clerkMiddleware());
-
-// ✅ JSON parser only for normal JSON routes
-app.use(express.json());
-
-// ✅ Routes
+// Routes
 app.get("/", (req, res) => {
   res.send("Edemy API is working fine!");
 });
 
-// ✅ Clerk webhook needs JSON
+// ✅ Clerk webhook (needs JSON)
 app.post("/clerk", express.json(), clerkWebhooks);
 
-// ✅ IMPORTANT ✅
-// Do NOT use express.json() here, because educator has multipart/form-data (image upload)
+// ✅ APIs
 app.use("/api/educator", educatorRouter);
-
 app.use("/api/course", courseRouter);
 app.use("/api/user", userRouter);
 
-// ✅ Stripe webhook needs RAW body
-app.post(
-  "/stripe",
-  express.raw({ type: "application/json" }),
-  stripeWebhooks
-);
-
-// port
+// Port
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
