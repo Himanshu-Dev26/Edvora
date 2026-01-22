@@ -17,7 +17,7 @@ export default function PrivacyPolicy() {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <a href="mailto:gps.96169@gmail.com" className="inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium bg-blue-600 text-white shadow-sm hover:shadow-lg transition">Contact</a>
+            <a href="himanshujajoria2003@gmail.com" className="inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium bg-blue-600 text-white shadow-sm hover:shadow-lg transition">Contact</a>
             <button className="px-4 py-2 rounded-xl border border-blue-100 text-sm font-medium bg-white text-blue-600">Manage Cookies</button>
           </div>
         </header>
@@ -70,7 +70,7 @@ export default function PrivacyPolicy() {
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <p className="text-sm text-gray-600">Last updated: <span className="font-medium text-gray-700">November 10, 2025</span></p>
+            <p className="text-sm text-gray-600">Last updated: <span className="font-medium text-gray-700">janurary 10, 2026</span></p>
 
             <div className="md:hidden flex items-center gap-3">
               <a href="mailto:gps.96169@gmail.com" className="inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium bg-blue-600 text-white shadow-sm hover:shadow-lg transition">Contact</a>
@@ -83,7 +83,7 @@ export default function PrivacyPolicy() {
           <div className="flex items-start gap-4">
             {/* <img src={assets.sketch} alt="decoration" className="w-20 h-20 hidden md:block opacity-90" /> */}
             <div className="text-sm text-gray-600">
-              <p className="mb-2">For privacy requests or questions, email us at <a href="mailto:gps.96169@gmail.com" className="text-blue-600 font-medium">gps.96169@gmail.com</a>.</p>
+              <p className="mb-2">For privacy requests or questions, email us at <a href="himanshujajoria2003@gmail.com" className="text-blue-600 font-medium">himanshujajoria2003@gmail.com</a>.</p>
               <p>If you need this policy in another format, contact support and we’ll help.</p>
             </div>
           </div>

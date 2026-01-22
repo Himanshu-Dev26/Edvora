@@ -110,16 +110,16 @@ export const dummyEducatorData = {
 export const dummyTestimonial = [
     {
         name: 'Sophia Carter',
-        role: 'Student @ AKTU',
+        role: 'Student @ MAIT',
         image: assets.abhishek,
         rating: 5,
         feedback: 'Edvora LMS has revolutionized my teaching experience. The platform is intuitive, making course creation and student engagement seamless.',
     },
     {
         name: 'Shreyansh Dubey',
-        role: 'Student @ KNIT',
+        role: 'Student @ IIT DELHI',
         image: assets.shreyansh,
-        rating: 4.8,
+        rating: 5,
         feedback: 'Edvora LMS provides an exceptional learning environment. The structured courses, real-time tracking, and user-friendly interface are top-notch.',
     },
     {

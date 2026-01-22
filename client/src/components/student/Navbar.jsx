@@ -80,7 +80,7 @@ const Navbar = () => {
 					// <UserButton />
 					<UserButton>
 						<UserButton.MenuItems>
-                                <UserButton.Action label='Go Projects' labelIcon={<ExternalLinkIcon size={16} className='text-green-500' />}  onClick={() => window.open("", "_blank")} />
+                                <UserButton.Action label='Go Projects' labelIcon={<ExternalLinkIcon size={16} className='text-green-500' />}  onClick={() => window.open("https://github.com/Himanshu-Dev26/Edvora", "_blank")} />
                             </UserButton.MenuItems>
 					</UserButton>
 				) : (
@@ -114,7 +114,7 @@ const Navbar = () => {
 
 				<div className="flex items-center gap-2">
 				<Link
-					to=""
+					to="https://github.com/Himanshu-Dev26/Edvora"
 					target="_blank"
 					className="flex items-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium text-indigo-600 shadow-sm transition-colors hover:bg-accent hover:text-indigo-700"
 				>
