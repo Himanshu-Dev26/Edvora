@@ -1,10 +1,40 @@
 import Stripe from "stripe";
+import { clerkClient } from "@clerk/express";
 import Course from "../models/Course.js";
 import { Purchase } from "../models/Purchase.js";
 import User from "../models/User.js";
 import { CourseProgress } from "../models/CourseProgress.js";
 
-// ✅ Get users data (Auto Create User)
+// ✅ Helper: Create user if not exists
+const createUserIfNotExists = async (userId) => {
+  let user = await User.findById(userId);
+
+  if (!user) {
+    const clerkUser = await clerkClient.users.getUser(userId);
+
+    const name =
+      `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim() ||
+      clerkUser.username ||
+      "User";
+
+    const email =
+      clerkUser.emailAddresses?.[0]?.emailAddress || "no-email@user.com";
+
+    const imageUrl = clerkUser.imageUrl || "https://via.placeholder.com/150";
+
+    user = await User.create({
+      _id: userId, // your model uses Clerk userId as _id
+      name,
+      email,
+      imageUrl,
+      enrolledCourses: [],
+    });
+  }
+
+  return user;
+};
+
+// ✅ Get users data
 export const getUserData = async (req, res) => {
   try {
     const userId = req.auth?.userId;
@@ -13,33 +43,7 @@ export const getUserData = async (req, res) => {
       return res.status(401).json({ success: false, message: "Unauthorized!" });
     }
 
-    let user = await User.findById(userId);
-
-    // ✅ Auto-create user if not found
-    if (!user) {
-      const name =
-        req.auth?.sessionClaims?.fullName ||
-        req.auth?.sessionClaims?.name ||
-        "User";
-
-      const email =
-        req.auth?.sessionClaims?.email ||
-        req.auth?.sessionClaims?.email_address ||
-        "";
-
-      const imageUrl =
-        req.auth?.sessionClaims?.imageUrl ||
-        req.auth?.sessionClaims?.picture ||
-        "";
-
-      user = await User.create({
-        _id: userId,
-        name,
-        email,
-        imageUrl,
-        enrolledCourses: [],
-      });
-    }
+    const user = await createUserIfNotExists(userId);
 
     return res.json({ success: true, user });
   } catch (error) {
@@ -56,16 +60,14 @@ export const userEnrolledCourses = async (req, res) => {
       return res.status(401).json({ success: false, message: "Unauthorized!" });
     }
 
-    const userData = await User.findById(userId).populate("enrolledCourses");
+    // ✅ Ensure user exists first
+    await createUserIfNotExists(userId);
 
-    // ✅ if user missing, return empty array (no crash)
-    if (!userData) {
-      return res.json({ success: true, enrolledCourses: [] });
-    }
+    const userData = await User.findById(userId).populate("enrolledCourses");
 
     return res.json({
       success: true,
-      enrolledCourses: userData.enrolledCourses || [],
+      enrolledCourses: userData?.enrolledCourses || [],
     });
   } catch (error) {
     return res.json({ success: false, message: error.message });
@@ -83,7 +85,7 @@ export const purchaseCourse = async (req, res) => {
       return res.status(401).json({ success: false, message: "Unauthorized!" });
     }
 
-    const userData = await User.findById(userId);
+    const userData = await createUserIfNotExists(userId);
     const courseData = await Course.findById(courseId);
 
     if (!userData || !courseData) {
