@@ -17,7 +17,6 @@ const CourseDetails = () => {
   const [openSections, setOpenSections] = useState({});
   const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
   const [playerData, setPlayerData] = useState(null);
-  const [notFound, setNotFound] = useState(false);
 
   const {
     currency,
@@ -30,21 +29,36 @@ const CourseDetails = () => {
     getToken,
   } = useContext(AppContext);
 
+  // ✅ Extract correct YouTube Video ID
+  const getYouTubeId = (url) => {
+    try {
+      const u = new URL(url);
+
+      // youtube.com/watch?v=VIDEOID
+      const v = u.searchParams.get("v");
+      if (v) return v;
+
+      // youtu.be/VIDEOID
+      if (u.hostname.includes("youtu.be")) return u.pathname.split("/")[1] || null;
+
+      // youtube.com/embed/VIDEOID
+      if (u.pathname.includes("/embed/")) return u.pathname.split("/embed/")[1] || null;
+
+      return null;
+    } catch (e) {
+      return null;
+    }
+  };
+
   const fetcheCourseData = async () => {
     try {
-      setNotFound(false);
       const { data } = await axios.get(backendUrl + "/api/course/" + id);
-
-      if (data.success && data.courseData) {
+      if (data.success) {
         setCourseData(data.courseData);
       } else {
-        setCourseData(null);
-        setNotFound(true);
-        toast.error(data.message || "Course not found");
+        toast.error(data.message);
       }
     } catch (error) {
-      setCourseData(null);
-      setNotFound(true);
       toast.error(error.response?.data?.message || error.message);
     }
   };
@@ -56,9 +70,6 @@ const CourseDetails = () => {
       }
       if (isAlreadyEnrolled) {
         return toast.warn("Already Enrolled");
-      }
-      if (!courseData?._id) {
-        return toast.error("Course data not loaded");
       }
 
       const token = await getToken();
@@ -95,27 +106,6 @@ const CourseDetails = () => {
     setOpenSections((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-  // ✅ If course doesn't exist
-  if (notFound) {
-    return (
-      <>
-        <div className="pt-24 text-center px-6">
-          <h2 className="text-2xl font-semibold text-gray-800">Course Not Found</h2>
-          <p className="text-gray-500 mt-2">
-            This course id is invalid or not available in your database.
-          </p>
-          <Link
-            to="/"
-            className="inline-block mt-6 px-5 py-2 bg-blue-600 text-white rounded"
-          >
-            Go Home
-          </Link>
-        </div>
-        <Footer />
-      </>
-    );
-  }
-
   return courseData ? (
     <>
       <div className="flex md:flex-row flex-col-reverse gap-10 relative items-start justify-between md:px-36 px-8 md:placeholder-teal-300 pt-20 text-left">
@@ -124,7 +114,7 @@ const CourseDetails = () => {
         {/* left column */}
         <div className="max-w-xl z-10 text-gray-500">
           <h1 className="md:text-course-details-heading-large text-course-details-heading-small font-semibold text-gray-800">
-            {courseData?.courseTitle || "Untitled Course"}
+            {courseData?.courseTitle}
           </h1>
 
           <p
@@ -134,7 +124,7 @@ const CourseDetails = () => {
             }}
           ></p>
 
-          {/* review and rating  */}
+          {/* review and rating */}
           <div className="flex items-center space-x-2 pt-3 pb-1 text-sm">
             <p>{calculateRating(courseData)}</p>
             <div className="flex">
@@ -165,10 +155,10 @@ const CourseDetails = () => {
             </p>
           </div>
 
-          {/* ✅ FIXED educator name crash */}
           <p className="text-sm">
             Course by{" "}
             <span className="text-blue-600 underline">
+              {/* ✅ Fix crash */}
               {courseData?.educator?.name || "Unknown Educator"}
             </span>
           </p>
@@ -178,7 +168,10 @@ const CourseDetails = () => {
 
             <div className="pt-5">
               {(courseData?.courseContent || []).map((chapter, index) => (
-                <div className="border border-gray-300 bg-white mb-2 rounded" key={index}>
+                <div
+                  className="border border-gray-300 bg-white mb-2 rounded"
+                  key={index}
+                >
                   <div
                     className="flex items-center justify-between px-4 py-3 cursor-pointer select-none"
                     onClick={() => toggleSection(index)}
@@ -192,13 +185,13 @@ const CourseDetails = () => {
                         alt="down_arrow_icon"
                       />
                       <p className="font-medium md:text-base text-sm">
-                        {chapter?.chapterTitle || "Chapter"}
+                        {chapter?.chapterTitle}
                       </p>
                     </div>
 
                     <p className="text-sm md:text-default">
                       {(chapter?.chapterContent || []).length} lectures -{" "}
-                      {calculateChapterTime(chapter)}{" "}
+                      {calculateChapterTime(chapter)}
                     </p>
                   </div>
 
@@ -212,30 +205,34 @@ const CourseDetails = () => {
                         <li key={i} className="flex items-start gap-2 py-1">
                           {lecture?.isPreviewFree ? (
                             <img
-                              onClick={() =>
-                                setPlayerData({
-                                  videoId: lecture?.lectureUrl?.split("/")?.pop(),
-                                })
-                              }
+                              onClick={() => {
+                                const vid = getYouTubeId(lecture.lectureUrl);
+                                if (!vid) return toast.error("Invalid YouTube link!");
+                                setPlayerData({ videoId: vid });
+                              }}
                               className="w-4 h-4 mt-1 cursor-pointer"
                               src={assets.play_icon}
                               alt="play_icon"
                             />
                           ) : (
-                            <img className="w-4 h-4 mt-1" src={assets.play_icon} alt="play_icon" />
+                            <img
+                              className="w-4 h-4 mt-1"
+                              src={assets.play_icon}
+                              alt="play_icon"
+                            />
                           )}
 
                           <div className="flex items-center justify-between w-full text-gray-800 text-xs md:text-default">
-                            <p>{lecture?.lectureTitle || "Lecture"}</p>
+                            <p>{lecture?.lectureTitle}</p>
 
                             <div className="flex gap-2">
                               {lecture?.isPreviewFree && (
                                 <p
-                                  onClick={() =>
-                                    setPlayerData({
-                                      videoId: lecture?.lectureUrl?.split("/")?.pop(),
-                                    })
-                                  }
+                                  onClick={() => {
+                                    const vid = getYouTubeId(lecture.lectureUrl);
+                                    if (!vid) return toast.error("Invalid YouTube link!");
+                                    setPlayerData({ videoId: vid });
+                                  }}
                                   className="text-blue-500 cursor-pointer"
                                 >
                                   Preview
@@ -243,9 +240,10 @@ const CourseDetails = () => {
                               )}
 
                               <p>
-                                {humanizeDuration((lecture?.lectureDuration || 0) * 60 * 1000, {
-                                  units: ["h", "m"],
-                                })}
+                                {humanizeDuration(
+                                  (lecture?.lectureDuration || 0) * 60 * 1000,
+                                  { units: ["h", "m"] }
+                                )}
                               </p>
                             </div>
                           </div>
@@ -259,7 +257,9 @@ const CourseDetails = () => {
           </div>
 
           <div className="py-20 text-sm md:text-default">
-            <h3 className="text-xl font-semibold text-gray-800 ">Course Description</h3>
+            <h3 className="text-xl font-semibold text-gray-800 ">
+              Course Description
+            </h3>
             <p
               className="pt-3 rich-text"
               dangerouslySetInnerHTML={{
@@ -271,7 +271,7 @@ const CourseDetails = () => {
 
         {/* right column */}
         <div className="max-w-course-card z-10 shadow-custom-card rounded-t md:rounded-none overflow-hidden bg-white min-w-[300px] sm:min-w-[420px]">
-          {playerData ? (
+          {playerData?.videoId ? (
             <YouTube
               videoId={playerData.videoId}
               opts={{ playerVars: { autoplay: 1 } }}
@@ -303,11 +303,11 @@ const CourseDetails = () => {
               </p>
 
               <p className="md:text-lg text-gray-500 line-through">
-                {currency} {courseData.coursePrice}{" "}
+                {currency} {courseData.coursePrice}
               </p>
 
               <p className="md:text-lg text-gray-500">
-                {currency} {courseData.discount}% off{" "}
+                {courseData.discount}% off
               </p>
             </div>
 
@@ -334,19 +334,19 @@ const CourseDetails = () => {
 
             <div>
               {isAlreadyEnrolled ? (
-                <p className="md:mt-6 mt-4 w-full py-3 rounded text-center  bg-blue-600 text-white font-medium">
+                <p className="md:mt-6 mt-4 w-full py-3 rounded text-center bg-blue-600 text-white font-medium">
                   Already Enrolled
                 </p>
               ) : courseData.coursePrice -
                   (courseData.discount * courseData.coursePrice) / 100 ===
                 0.0 ? (
-                <p className="md:mt-6 mt-4 w-full py-3 rounded text-center  bg-blue-600 text-white font-medium">
+                <p className="md:mt-6 mt-4 w-full py-3 rounded text-center bg-blue-600 text-white font-medium">
                   Free
                 </p>
               ) : (
                 <button
                   onClick={enrollCourse}
-                  className="md:mt-6 mt-4 w-full py-3 rounded text-center  bg-blue-600 text-white font-medium"
+                  className="md:mt-6 mt-4 w-full py-3 rounded text-center bg-blue-600 text-white font-medium"
                 >
                   Enroll Now
                 </button>
@@ -357,12 +357,12 @@ const CourseDetails = () => {
               {courseData.coursePrice -
                 (courseData.discount * courseData.coursePrice) / 100 ===
               0.0 ? (
-                <p className="md:mt-6 mt-4 w-full text-center py-3 rounded  bg-blue-600 text-white font-medium">
+                <p className="md:mt-6 mt-4 w-full text-center py-3 rounded bg-blue-600 text-white font-medium">
                   Click on Course structure
                 </p>
               ) : isAlreadyEnrolled ? (
                 <Link to="/my-enrollments">
-                  <p className="md:mt-6 mt-4 w-full text-center py-3 rounded  bg-blue-600 text-white font-medium">
+                  <p className="md:mt-6 mt-4 w-full text-center py-3 rounded bg-blue-600 text-white font-medium">
                     My Enrollments
                   </p>
                 </Link>
@@ -373,7 +373,7 @@ const CourseDetails = () => {
 
             <div className="pt-6">
               <p className="md:text-xl text-lg font-medium text-gray-800">
-                What's in the course?{" "}
+                What's in the course?
               </p>
               <ul className="ml-4 pt-2 text-sm md:text-default list-disc text-gray-500">
                 <li>Lifetime access with free updates.</li>
@@ -381,7 +381,6 @@ const CourseDetails = () => {
                 <li>Downloadable resources and source code.</li>
                 <li>Quizzes to test your knowledge.</li>
                 <li>Certificate of completion.</li>
-                <li>Quizzes to test your knowledge.</li>
               </ul>
             </div>
           </div>
